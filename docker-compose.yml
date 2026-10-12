@@ -6,7 +6,7 @@ services:
     restart: unless-stopped
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-financas}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-financas}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Definir POSTGRES_PASSWORD no .env (ver .env.example)}
       POSTGRES_DB: ${POSTGRES_DB:-financas}
     ports:
       - '127.0.0.1:${DB_PORT:-5432}:5432'
@@ -22,10 +22,10 @@ services:
     build: ./web
     restart: unless-stopped
     environment:
-      DATABASE_URL: postgres://${POSTGRES_USER:-financas}:${POSTGRES_PASSWORD:-financas}@db:5432/${POSTGRES_DB:-financas}
+      DATABASE_URL: postgres://${POSTGRES_USER:-financas}:${POSTGRES_PASSWORD:?}@db:5432/${POSTGRES_DB:-financas}
       APP_TIMEZONE: ${APP_TIMEZONE:-Europe/Lisbon}
-      AUTH_PASSWORD: ${AUTH_PASSWORD:-}
-      AUTH_SECRET: ${AUTH_SECRET:-}
+      AUTH_PASSWORD: ${AUTH_PASSWORD:?Definir AUTH_PASSWORD no .env (ver .env.example)}
+      AUTH_SECRET: ${AUTH_SECRET:?Definir AUTH_SECRET no .env (openssl rand -hex 32)}
     ports:
       - '${WEB_BIND:-127.0.0.1}:${WEB_PORT:-3000}:3000'
     depends_on:

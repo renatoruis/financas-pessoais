@@ -50,6 +50,9 @@
     "vitest": "^5.0.4"
   },
   "pnpm": {
+    "overrides": {
+      "postcss": "^8.5.23"
+    },
     "onlyBuiltDependencies": [
       "esbuild",
       "unrs-resolver"

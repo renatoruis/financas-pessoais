@@ -66,6 +66,16 @@ export async function verifySessionToken(
   return constantTimeEqual(signature, await sign(secret, expiresAt));
 }
 
+/** Cookie válido para a configuração atual; sem configuração ninguém entra. */
+export async function hasValidSession(
+  token: string | undefined,
+  nowMs: number,
+  source: Record<string, string | undefined> = process.env,
+): Promise<boolean> {
+  const auth = readAuthConfig(source);
+  return auth !== null && verifySessionToken(token, auth.secret, nowMs);
+}
+
 /** Só caminhos internos, para o `next` do login não servir de redirecionamento aberto. */
 export function safeNextPath(next: string | undefined): string {
   return next?.startsWith('/') && !next.startsWith('//') && !next.startsWith('/\\') ? next : '/';

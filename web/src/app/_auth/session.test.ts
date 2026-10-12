@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   createSessionToken,
+  hasValidSession,
   passwordMatches,
   readAuthConfig,
   safeNextPath,
@@ -53,6 +54,17 @@ describe('sessão', () => {
     ).toBe(false);
     expect(await verifySessionToken(`${token}.x`, SECRET, NOW)).toBe(false);
     expect(await verifySessionToken(undefined, SECRET, NOW)).toBe(false);
+  });
+});
+
+describe('hasValidSession', () => {
+  const env = { AUTH_PASSWORD: 'x', AUTH_SECRET: SECRET };
+
+  it('exige token válido e autenticação configurada', async () => {
+    const token = await createSessionToken(SECRET, NOW);
+    expect(await hasValidSession(token, NOW, env)).toBe(true);
+    expect(await hasValidSession(undefined, NOW, env)).toBe(false);
+    expect(await hasValidSession(token, NOW, { AUTH_SECRET: SECRET })).toBe(false);
   });
 });
 
