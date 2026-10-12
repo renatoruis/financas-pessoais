@@ -1,4 +1,4 @@
-import type { Entry, EntryStatus } from '@/domain/entries/entry';
+import type { Entry, EntryKind, EntryStatus } from '@/domain/entries/entry';
 import type { YearMonth } from '@/domain/shared/iso-date';
 
 export interface EntryFilter {
@@ -7,6 +7,7 @@ export interface EntryFilter {
   readonly periodFrom?: YearMonth;
   readonly periodTo?: YearMonth;
   readonly statuses?: readonly EntryStatus[];
+  readonly kind?: EntryKind;
   readonly costCenterId?: string;
   readonly categoryId?: string;
   readonly linkGroup?: string;

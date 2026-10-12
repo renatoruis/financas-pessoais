@@ -16,6 +16,8 @@ interface EntryFormProps {
   readonly reference: ReferenceData;
   readonly today: IsoDate;
   readonly entry?: Entry;
+  /** Duplicar: cria um lançamento novo a partir deste, pendente e com vencimento hoje. */
+  readonly template?: Entry;
   readonly onDone: () => void;
 }
 
@@ -30,21 +32,22 @@ function referenceDefaults(reference: ReferenceData, entityId: string) {
   };
 }
 
-function initialValues({ reference, today, entry }: EntryFormProps): EntryFormValues {
+function initialValues({ reference, today, entry, template }: EntryFormProps): EntryFormValues {
+  const source = entry ?? template;
   return {
     ...referenceDefaults(reference, reference.entities[0]?.id ?? ''),
-    ...(entry && {
-      entityId: entry.entityId,
-      costCenterId: entry.costCenterId,
-      categoryId: entry.categoryId,
+    ...(source && {
+      entityId: source.entityId,
+      costCenterId: source.costCenterId,
+      categoryId: source.categoryId,
     }),
-    kind: entry?.kind ?? 'expense',
-    description: entry?.description ?? '',
+    kind: source?.kind ?? 'expense',
+    description: source?.description ?? '',
     dueDate: entry?.dueDate ?? today,
-    amount: centsToInput(entry?.amount?.cents),
-    expected: centsToInput(entry?.expected?.cents),
+    amount: centsToInput(source?.amount?.cents),
+    expected: centsToInput(source?.expected?.cents),
     settledOn: entry?.settledOn ?? '',
-    notes: entry?.notes ?? '',
+    notes: source?.notes ?? '',
   };
 }
 

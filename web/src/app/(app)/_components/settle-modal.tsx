@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import type { Entry } from '@/domain/entries/entry';
+import type { IsoDate } from '@/domain/shared/iso-date';
 import { Button } from '@/ui/button';
 import { Field, Input } from '@/ui/field';
 import { Icon } from '@/ui/icon';
@@ -12,14 +13,17 @@ import { useAction } from './use-action';
 
 interface SettleModalProps {
   readonly entry: Entry;
+  readonly today: IsoDate;
   readonly open: boolean;
   readonly onClose: () => void;
 }
 
-export function SettleModal({ entry, open, onClose }: SettleModalProps) {
+export function SettleModal({ entry, today, open, onClose }: SettleModalProps) {
   const [finalAmount, setFinalAmount] = useState('');
+  const [on, setOn] = useState<string>(today);
   const { pending, run } = useAction();
-  const submit = () => run(() => settleEntryAction(entry.id, finalAmount), onClose);
+  const submit = () => run(() => settleEntryAction(entry.id, finalAmount, on), onClose);
+  const submitOnEnter = (key: string) => key === 'Enter' && submit();
   return (
     <Modal
       open={open}
@@ -31,7 +35,7 @@ export function SettleModal({ entry, open, onClose }: SettleModalProps) {
             Cancelar
           </Button>
           <Button variant="success" icon="check" disabled={pending} onClick={submit}>
-            Liquidar hoje
+            Liquidar
           </Button>
         </>
       }
@@ -43,23 +47,33 @@ export function SettleModal({ entry, open, onClose }: SettleModalProps) {
             Valor registado: <MoneyText value={entry.amount} />
           </p>
         </div>
-        <Field
-          label="Valor final"
-          hint={
-            entry.amount
-              ? 'Só se o valor real for diferente.'
-              : 'Obrigatório: este item não tem valor.'
-          }
-        >
-          <Input
-            autoFocus
-            inputMode="decimal"
-            placeholder="0,00"
-            value={finalAmount}
-            onChange={(e) => setFinalAmount(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && submit()}
-          />
-        </Field>
+        <div className="grid grid-cols-2 gap-3">
+          <Field
+            label="Valor final"
+            hint={
+              entry.amount
+                ? 'Só se o valor real for diferente.'
+                : 'Obrigatório: este item não tem valor.'
+            }
+          >
+            <Input
+              autoFocus
+              inputMode="decimal"
+              placeholder="0,00"
+              value={finalAmount}
+              onChange={(e) => setFinalAmount(e.target.value)}
+              onKeyDown={(e) => submitOnEnter(e.key)}
+            />
+          </Field>
+          <Field label={entry.kind === 'income' ? 'Recebido em' : 'Pago em'}>
+            <Input
+              type="date"
+              value={on}
+              onChange={(e) => setOn(e.target.value)}
+              onKeyDown={(e) => submitOnEnter(e.key)}
+            />
+          </Field>
+        </div>
         {entry.linkGroup && (
           <p className="flex items-center gap-2 text-sm text-sky-700">
             <Icon name="link" /> Os lançamentos ligados (ex.: IVA) também ficam liquidados.

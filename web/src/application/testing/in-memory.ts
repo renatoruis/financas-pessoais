@@ -20,6 +20,7 @@ function matches(e: Entry, f: EntryFilter): boolean {
     (!f.periodFrom || period >= f.periodFrom) &&
     (!f.periodTo || period <= f.periodTo) &&
     (!f.statuses || f.statuses.includes(e.status)) &&
+    (!f.kind || e.kind === f.kind) &&
     (!f.costCenterId || e.costCenterId === f.costCenterId) &&
     (!f.categoryId || e.categoryId === f.categoryId) &&
     (!f.linkGroup || e.linkGroup === f.linkGroup) &&

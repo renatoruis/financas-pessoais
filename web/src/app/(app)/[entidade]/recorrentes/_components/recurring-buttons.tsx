@@ -5,6 +5,7 @@ import type { ReferenceData } from '@/application/shared/reference-lookup';
 import type { RecurringTemplate } from '@/domain/recurring/recurring-template';
 import type { YearMonth } from '@/domain/shared/iso-date';
 import { Button } from '@/ui/button';
+import { ConfirmDialog } from '@/ui/confirm-dialog';
 import { Drawer } from '@/ui/modal';
 import { useAction } from '../../../_components/use-action';
 import { deleteRecurringAction, generateRecurringAction } from '../actions';
@@ -30,25 +31,42 @@ interface RowActionsProps {
 }
 
 export function RecurringRowActions({ reference, template }: RowActionsProps) {
-  const [open, setOpen] = useState(false);
+  const [dialog, setDialog] = useState<'edit' | 'delete' | null>(null);
+  const close = () => setDialog(null);
   const { pending, run } = useAction();
-  const remove = () =>
-    window.confirm(`Apagar o recorrente "${template.description}"? Os lançamentos ficam.`) &&
-    run(() => deleteRecurringAction(template.id));
   return (
     <div className="flex justify-end gap-1">
-      <Button size="sm" variant="ghost" icon="pen" title="Editar" onClick={() => setOpen(true)} />
+      <Button
+        size="sm"
+        variant="ghost"
+        icon="pen"
+        title="Editar"
+        onClick={() => setDialog('edit')}
+      />
       <Button
         size="sm"
         variant="ghost"
         icon="trash"
         title="Apagar"
         disabled={pending}
-        onClick={remove}
+        onClick={() => setDialog('delete')}
       />
-      <Drawer open={open} onClose={() => setOpen(false)} title="Editar recorrente">
-        <RecurringForm reference={reference} template={template} onDone={() => setOpen(false)} />
+      <Drawer open={dialog === 'edit'} onClose={close} title="Editar recorrente">
+        <RecurringForm reference={reference} template={template} onDone={close} />
       </Drawer>
+      <ConfirmDialog
+        open={dialog === 'delete'}
+        title="Apagar recorrente"
+        confirmLabel="Apagar"
+        pending={pending}
+        onClose={close}
+        onConfirm={() => run(() => deleteRecurringAction(template.id), close)}
+      >
+        <p>
+          Apagar o recorrente <strong>{template.description}</strong>? Os lançamentos já gerados
+          ficam.
+        </p>
+      </ConfirmDialog>
     </div>
   );
 }

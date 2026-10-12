@@ -10,6 +10,7 @@ import { entityHref } from '../../_lib/entity-modules';
 import { loadEntityRoute, type EntityParams } from '../../_lib/entity-route';
 import { monthPickerProps, resolvePeriod, type SearchParams } from '../../_lib/period';
 import { EntryFilters } from './_components/entry-filters';
+import { EntryList } from './_components/entry-list';
 import { EntryTable } from './_components/entry-table';
 import { parseEntryFilters, toEntryFilter } from './filters';
 
@@ -62,7 +63,14 @@ export default async function EntriesPage({ params, searchParams }: PageProps) {
             Muda o mês ou os filtros, ou cria um novo lançamento.
           </EmptyState>
         ) : (
-          <EntryTable entries={entries} reference={reference} today={today} />
+          <>
+            <div className="hidden xl:block">
+              <EntryTable entries={entries} reference={reference} today={today} />
+            </div>
+            <div className="xl:hidden">
+              <EntryList entries={entries} reference={reference} today={today} />
+            </div>
+          </>
         )}
       </Card>
     </div>

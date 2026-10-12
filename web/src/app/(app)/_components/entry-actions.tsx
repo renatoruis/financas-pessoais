@@ -5,6 +5,7 @@ import type { ReferenceData } from '@/application/shared/reference-lookup';
 import type { Entry } from '@/domain/entries/entry';
 import type { IsoDate } from '@/domain/shared/iso-date';
 import { Button } from '@/ui/button';
+import { ConfirmDialog } from '@/ui/confirm-dialog';
 import { Drawer } from '@/ui/modal';
 import { cancelEntryAction, deleteEntryAction, reopenEntryAction } from '../actions';
 import { EntryForm } from './entry-form';
@@ -19,14 +20,23 @@ interface EntryActionsProps {
   readonly compact?: boolean;
 }
 
+type Dialog = 'settle' | 'edit' | 'duplicate' | 'delete';
+
 export function EntryActions({ entry, reference, today, compact }: EntryActionsProps) {
-  const [dialog, setDialog] = useState<'settle' | 'edit' | null>(null);
+  const [dialog, setDialog] = useState<Dialog | null>(null);
   const { pending, run } = useAction();
   const close = () => setDialog(null);
   const pendingEntry = entry.status === 'pending';
-  const confirmDelete = () =>
-    window.confirm(`Apagar "${entry.description}"? Não dá para desfazer.`) &&
-    run(() => deleteEntryAction(entry.id));
+  const ghost = (icon: string, title: string, onClick: () => void) => (
+    <Button
+      size="sm"
+      variant="ghost"
+      icon={icon}
+      title={title}
+      disabled={pending}
+      onClick={onClick}
+    />
+  );
 
   return (
     <div className="flex items-center justify-end gap-1">
@@ -37,46 +47,35 @@ export function EntryActions({ entry, reference, today, compact }: EntryActionsP
       )}
       {!compact && (
         <>
-          <Button
-            size="sm"
-            variant="ghost"
-            icon="pen"
-            title="Editar"
-            onClick={() => setDialog('edit')}
-          />
-          {pendingEntry ? (
-            <Button
-              size="sm"
-              variant="ghost"
-              icon="ban"
-              title="Cancelar"
-              disabled={pending}
-              onClick={() => run(() => cancelEntryAction(entry.id))}
-            />
-          ) : (
-            <Button
-              size="sm"
-              variant="ghost"
-              icon="rotate-left"
-              title="Voltar a pendente"
-              disabled={pending}
-              onClick={() => run(() => reopenEntryAction(entry.id))}
-            />
-          )}
-          <Button
-            size="sm"
-            variant="ghost"
-            icon="trash"
-            title="Apagar"
-            disabled={pending}
-            onClick={confirmDelete}
-          />
+          {ghost('pen', 'Editar', () => setDialog('edit'))}
+          {ghost('copy', 'Duplicar', () => setDialog('duplicate'))}
+          {pendingEntry
+            ? ghost('ban', 'Cancelar', () => run(() => cancelEntryAction(entry.id)))
+            : ghost('rotate-left', 'Voltar a pendente', () =>
+                run(() => reopenEntryAction(entry.id)),
+              )}
+          {ghost('trash', 'Apagar', () => setDialog('delete'))}
         </>
       )}
-      <SettleModal entry={entry} open={dialog === 'settle'} onClose={close} />
+      <SettleModal entry={entry} today={today} open={dialog === 'settle'} onClose={close} />
       <Drawer open={dialog === 'edit'} onClose={close} title="Editar lançamento">
         <EntryForm reference={reference} today={today} entry={entry} onDone={close} />
       </Drawer>
+      <Drawer open={dialog === 'duplicate'} onClose={close} title="Novo lançamento (cópia)">
+        <EntryForm reference={reference} today={today} template={entry} onDone={close} />
+      </Drawer>
+      <ConfirmDialog
+        open={dialog === 'delete'}
+        title="Apagar lançamento"
+        confirmLabel="Apagar"
+        pending={pending}
+        onClose={close}
+        onConfirm={() => run(() => deleteEntryAction(entry.id), close)}
+      >
+        <p>
+          Apagar <strong>{entry.description}</strong>? Não dá para desfazer.
+        </p>
+      </ConfirmDialog>
     </div>
   );
 }

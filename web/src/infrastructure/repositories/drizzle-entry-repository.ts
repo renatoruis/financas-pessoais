@@ -15,6 +15,7 @@ function conditions(f: EntryFilter): SQL[] {
     f.periodFrom ? gte(entries.period, f.periodFrom) : undefined,
     f.periodTo ? lte(entries.period, f.periodTo) : undefined,
     f.statuses ? inArray(entries.status, [...f.statuses]) : undefined,
+    f.kind ? eq(entries.kind, f.kind) : undefined,
     f.costCenterId ? eq(entries.costCenterId, f.costCenterId) : undefined,
     f.categoryId ? eq(entries.categoryId, f.categoryId) : undefined,
     f.linkGroup ? eq(entries.linkGroup, f.linkGroup) : undefined,

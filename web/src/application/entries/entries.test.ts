@@ -27,6 +27,19 @@ describe('casos de uso de lançamentos', () => {
     expect(await new ListEntries(deps).execute({ period: '2026-11' })).toHaveLength(0);
   });
 
+  it('filtra por tipo e categoria', async () => {
+    const deps = makeDeps();
+    const create = new CreateEntry(deps);
+    await create.execute(input);
+    await create.execute({ ...input, kind: 'income', description: 'Fatura' });
+    await create.execute({ ...input, categoryId: 'impostos', description: 'IRC' });
+    const list = new ListEntries(deps);
+    const incomes = await list.execute({ period: '2026-10', kind: 'income' });
+    expect(incomes.map((e) => e.description)).toEqual(['Fatura']);
+    const taxes = await list.execute({ period: '2026-10', categoryId: 'impostos' });
+    expect(taxes.map((e) => e.description)).toEqual(['IRC']);
+  });
+
   it('recusa centro ou categoria de outra entidade', async () => {
     const deps = makeDeps();
     const create = new CreateEntry(deps);
@@ -57,6 +70,13 @@ describe('casos de uso de lançamentos', () => {
     await expect(settle.execute({ id, finalAmountCents: null })).rejects.toThrow('valor final');
     expect(await settle.execute({ id, finalAmountCents: 12000 })).toEqual({ settled: 1 });
     expect(deps.entries.rows.get(id)).toMatchObject({ status: 'settled', settledOn: '2026-10-12' });
+  });
+
+  it('liquida na data indicada', async () => {
+    const deps = makeDeps();
+    const { id } = await new CreateEntry(deps).execute({ ...input, amountCents: 5000 });
+    await new SettleEntry(deps).execute({ id, finalAmountCents: null, on: '2026-10-03' });
+    expect(deps.entries.rows.get(id)).toMatchObject({ status: 'settled', settledOn: '2026-10-03' });
   });
 
   it('cancela, reabre e apaga', async () => {

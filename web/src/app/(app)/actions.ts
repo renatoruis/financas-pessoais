@@ -49,11 +49,16 @@ export async function updateEntryAction(
   }, 'Lançamento atualizado.');
 }
 
-export async function settleEntryAction(id: string, finalAmount: string): Promise<ActionResult> {
+export async function settleEntryAction(
+  id: string,
+  finalAmount: string,
+  on: string,
+): Promise<ActionResult> {
   return runAction(async () => {
     const { settled } = await getContainer().settleEntry.execute({
       id: idInput.parse(id),
       finalAmountCents: optionalMoneyInput.parse(finalAmount),
+      on: optionalIsoDateInput.parse(on) ?? undefined,
     });
     return settled > 1 ? `Liquidado (e ${settled - 1} ligado).` : undefined;
   }, 'Liquidado.');
