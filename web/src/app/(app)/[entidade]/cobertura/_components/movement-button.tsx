@@ -64,7 +64,7 @@ export function MovementButton({ today }: { readonly today: IsoDate }) {
             value={v.type}
             onChange={(type) => set({ type })}
           />
-          <p className="text-sm text-slate-500">{HINT[v.type]}</p>
+          <p className="text-fg-muted text-sm">{HINT[v.type]}</p>
           <div className="grid grid-cols-2 gap-3">
             <Field label="Valor (R$)">
               <Input

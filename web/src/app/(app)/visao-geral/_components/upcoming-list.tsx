@@ -24,12 +24,12 @@ function UpcomingRow({ entry, entity, today }: { entry: Entry; entity?: Entity; 
     <li className="flex items-center gap-3 py-2.5">
       <span className="h-8 w-1 shrink-0 rounded-full" style={{ backgroundColor: entity?.color }} />
       <div className="min-w-0 flex-1">
-        <p className="truncate text-sm font-medium text-slate-900">{entry.description}</p>
-        <p className="text-xs text-slate-500">{entity?.name}</p>
+        <p className="text-fg truncate text-sm font-medium">{entry.description}</p>
+        <p className="text-fg-muted text-xs">{entity?.name}</p>
       </div>
       <div className="text-right text-sm">
         <MoneyText value={entry.amount && money(signedCents(entry), entry.currency)} signed />
-        <p className={cn('text-xs', overdue ? 'font-semibold text-rose-600' : 'text-slate-500')}>
+        <p className={cn('text-xs', overdue ? 'text-negative font-semibold' : 'text-fg-muted')}>
           {formatShortDate(entry.dueDate)}
           {overdue && ' · em atraso'}
         </p>
@@ -61,7 +61,7 @@ export function UpcomingList({ upcoming, entities, today }: UpcomingListProps) {
           Nada a pagar nem a receber nos próximos 30 dias.
         </EmptyState>
       ) : (
-        <ul className="divide-y divide-slate-100">
+        <ul className="divide-line-soft divide-y">
           {entries.map((e) => (
             <UpcomingRow
               key={e.id}

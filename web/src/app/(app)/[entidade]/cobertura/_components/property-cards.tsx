@@ -44,7 +44,7 @@ export function CoverageCard({ coverage, names, visible }: CoverageCardProps) {
       subtitle="Quem sobra cobre quem falta; o resto vem da caixa"
       icon="scale-balanced"
     >
-      <Table>
+      <Table stickyFirst>
         <thead>
           <tr>
             <Th>Apartamento</Th>
@@ -59,7 +59,7 @@ export function CoverageCard({ coverage, names, visible }: CoverageCardProps) {
             .filter((c) => visible.has(c.costCenterId))
             .map((c) => (
               <tr key={c.costCenterId}>
-                <Td className="font-medium text-slate-900">{names.get(c.costCenterId)}</Td>
+                <Td className="text-fg font-medium">{names.get(c.costCenterId)}</Td>
                 <Td className="text-right">
                   <MoneyText value={c.result} signed />
                 </Td>

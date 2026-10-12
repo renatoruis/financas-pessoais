@@ -11,12 +11,12 @@ export function EmptyState({
   children?: ReactNode;
 }) {
   return (
-    <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-slate-200 px-6 py-10 text-center">
-      <span className="grid size-11 place-items-center rounded-2xl bg-slate-100 text-slate-500">
+    <div className="border-line flex flex-col items-center justify-center rounded-2xl border border-dashed px-6 py-10 text-center">
+      <span className="bg-surface-strong text-fg-muted grid size-11 place-items-center rounded-2xl">
         <Icon name={icon} />
       </span>
-      <p className="mt-3 font-medium text-slate-700">{title}</p>
-      {children && <div className="mt-1 text-sm text-slate-500">{children}</div>}
+      <p className="text-fg-muted mt-3 font-medium">{title}</p>
+      {children && <div className="text-fg-muted mt-1 text-sm">{children}</div>}
     </div>
   );
 }

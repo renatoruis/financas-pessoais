@@ -32,12 +32,12 @@ function EntryRow({ entry, reference, today, where }: EntryRowProps) {
     <li className="py-3">
       <div className="flex items-start gap-3">
         <div className="min-w-0 flex-1">
-          <p className={cn('truncate font-medium text-slate-900', cancelled && 'line-through')}>
+          <p className={cn('text-fg truncate font-medium', cancelled && 'line-through')}>
             {entry.description}
-            {entry.linkGroup && <Icon name="link" className="ml-2 text-xs text-sky-500" />}
-            {entry.recurringId && <Icon name="repeat" className="ml-2 text-xs text-slate-400" />}
+            {entry.linkGroup && <Icon name="link" className="text-info ml-2 text-xs" />}
+            {entry.recurringId && <Icon name="repeat" className="text-fg-subtle ml-2 text-xs" />}
           </p>
-          <p className="truncate text-xs text-slate-500">{where}</p>
+          <p className="text-fg-muted truncate text-xs">{where}</p>
         </div>
         <MoneyText
           value={entry.amount && money(signedCents(entry), entry.currency)}
@@ -45,15 +45,15 @@ function EntryRow({ entry, reference, today, where }: EntryRowProps) {
           className="shrink-0 font-medium"
         />
       </div>
-      <div className="mt-2 flex items-center gap-2">
-        <span className={cn('text-xs', overdue ? 'font-semibold text-rose-600' : 'text-slate-500')}>
+      <div className="mt-2 flex flex-wrap items-center gap-2">
+        <span className={cn('text-xs', overdue ? 'text-negative font-semibold' : 'text-fg-muted')}>
           {formatShortDate(entry.dueDate)}
         </span>
         <Badge tone={overdue ? 'danger' : STATUS_TONE[entry.status]}>
           {overdue ? 'Em atraso' : STATUS_LABEL[entry.status]}
         </Badge>
         {entry.settledOn && (
-          <span className="text-xs text-slate-400">{`em ${formatShortDate(entry.settledOn)}`}</span>
+          <span className="text-fg-subtle text-xs">{`em ${formatShortDate(entry.settledOn)}`}</span>
         )}
         <div className="ml-auto">
           <EntryActions entry={entry} reference={reference} today={today} />
@@ -68,7 +68,7 @@ export function EntryList({ entries, reference, today }: EntryListProps) {
   const centers = nameMap(reference.costCenters);
   const categories = nameMap(reference.categories);
   return (
-    <ul className="-my-3 divide-y divide-slate-100">
+    <ul className="divide-line-soft -my-3 divide-y">
       {entries.map((e) => (
         <EntryRow
           key={e.id}

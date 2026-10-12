@@ -47,16 +47,16 @@ function Toggle(props: {
   onChange: (v: boolean) => void;
 }) {
   return (
-    <label className="flex cursor-pointer items-start gap-3 rounded-xl bg-slate-50 p-3">
+    <label className="bg-surface-muted flex cursor-pointer items-start gap-3 rounded-xl p-3">
       <input
         type="checkbox"
-        className="mt-1 size-4 accent-slate-900"
+        className="accent-primary mt-1 size-4"
         checked={props.checked}
         onChange={(e) => props.onChange(e.target.checked)}
       />
       <span>
-        <span className="block text-sm font-medium text-slate-800">{props.label}</span>
-        <span className="block text-xs text-slate-500">{props.hint}</span>
+        <span className="text-fg block text-sm font-medium">{props.label}</span>
+        <span className="text-fg-muted block text-xs">{props.hint}</span>
       </span>
     </label>
   );

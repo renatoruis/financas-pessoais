@@ -7,8 +7,8 @@ import type {
 import { cn } from './cn';
 
 const CONTROL =
-  'w-full rounded-xl border-0 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm ring-1 ring-slate-200 ' +
-  'placeholder:text-slate-400 focus:ring-2 focus:ring-slate-900 focus:outline-none disabled:bg-slate-50';
+  'w-full rounded-xl border-0 bg-surface px-3 py-2 text-base text-fg sm:text-sm shadow-sm ring-1 ring-line ' +
+  'placeholder:text-fg-subtle focus:ring-2 focus:ring-primary focus:outline-none disabled:bg-surface-muted';
 
 interface FieldProps {
   readonly label: string;
@@ -21,12 +21,12 @@ interface FieldProps {
 export function Field({ label, hint, error, className, children }: FieldProps) {
   return (
     <label className={cn('block', className)}>
-      <span className="mb-1 block text-xs font-medium text-slate-600">{label}</span>
+      <span className="text-fg-muted mb-1 block text-xs font-medium">{label}</span>
       {children}
       {error ? (
-        <span className="mt-1 block text-xs text-rose-600">{error}</span>
+        <span className="text-negative mt-1 block text-xs">{error}</span>
       ) : (
-        hint && <span className="mt-1 block text-xs text-slate-500">{hint}</span>
+        hint && <span className="text-fg-muted mt-1 block text-xs">{hint}</span>
       )}
     </label>
   );

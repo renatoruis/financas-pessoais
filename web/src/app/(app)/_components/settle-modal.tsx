@@ -41,9 +41,9 @@ export function SettleModal({ entry, today, open, onClose }: SettleModalProps) {
       }
     >
       <div className="space-y-4">
-        <div className="rounded-xl bg-slate-50 p-4">
-          <p className="font-medium text-slate-900">{entry.description}</p>
-          <p className="mt-1 text-sm text-slate-500">
+        <div className="bg-surface-muted rounded-xl p-4">
+          <p className="text-fg font-medium">{entry.description}</p>
+          <p className="text-fg-muted mt-1 text-sm">
             Valor registado: <MoneyText value={entry.amount} />
           </p>
         </div>
@@ -75,7 +75,7 @@ export function SettleModal({ entry, today, open, onClose }: SettleModalProps) {
           </Field>
         </div>
         {entry.linkGroup && (
-          <p className="flex items-center gap-2 text-sm text-sky-700">
+          <p className="text-info flex items-center gap-2 text-sm">
             <Icon name="link" /> Os lançamentos ligados (ex.: IVA) também ficam liquidados.
           </p>
         )}

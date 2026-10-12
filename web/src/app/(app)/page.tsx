@@ -43,7 +43,7 @@ export default async function DashboardPage({ searchParams }: PageProps) {
         if (cards.length === 0) return null;
         return (
           <section key={group} className="space-y-3">
-            <h2 className="flex items-center gap-2 text-sm font-semibold tracking-wide text-slate-500 uppercase">
+            <h2 className="text-fg-muted flex items-center gap-2 text-sm font-semibold tracking-wide uppercase">
               <Icon name={GROUP_ICON[group]} />
               {GROUP_LABEL[group]}
             </h2>

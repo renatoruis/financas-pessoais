@@ -8,7 +8,7 @@ import { Table, Td, Th } from '@/ui/table';
 export function MonthlyTable({ history }: { readonly history: History }) {
   return (
     <Card title="Mês a mês" icon="table" subtitle="Só lançamentos liquidados">
-      <Table>
+      <Table stickyFirst>
         <thead>
           <tr>
             <Th>Mês</Th>
@@ -21,9 +21,7 @@ export function MonthlyTable({ history }: { readonly history: History }) {
         <tbody>
           {history.months.map((m) => (
             <tr key={m.period}>
-              <Td className="font-medium whitespace-nowrap text-slate-900">
-                {formatPeriod(m.period)}
-              </Td>
+              <Td className="text-fg font-medium whitespace-nowrap">{formatPeriod(m.period)}</Td>
               <Td className="text-right">
                 <MoneyText value={m.income} />
               </Td>
@@ -55,7 +53,7 @@ export function CategoryTable({ history, names }: CategoryTableProps) {
       {history.categories.length === 0 ? (
         <EmptyState icon="tags" title="Sem movimentos liquidados neste ano" />
       ) : (
-        <Table>
+        <Table stickyFirst>
           <thead>
             <tr>
               <Th>Categoria</Th>
@@ -67,7 +65,7 @@ export function CategoryTable({ history, names }: CategoryTableProps) {
           <tbody>
             {history.categories.map((c) => (
               <tr key={c.categoryId}>
-                <Td className="font-medium text-slate-900">{names.get(c.categoryId)}</Td>
+                <Td className="text-fg font-medium">{names.get(c.categoryId)}</Td>
                 <Td className="text-right">
                   <MoneyText value={c.income} />
                 </Td>

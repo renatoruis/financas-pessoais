@@ -10,7 +10,7 @@ import { KpiStrip } from './kpi-strip';
 import { UpcomingList } from './upcoming-list';
 
 const REGION_LABEL: Record<Currency, string> = { BRL: 'Brasil', EUR: 'Portugal' };
-const RESULT_COLOR = '#0f172a';
+const RESULT_COLOR = 'var(--color-fg)';
 
 function RollingChart({ region }: { region: CurrencyOverview }) {
   const { series, entities, currency } = region;
@@ -42,7 +42,7 @@ function RollingChart({ region }: { region: CurrencyOverview }) {
 export function RegionOverview({ region, today }: { region: CurrencyOverview; today: IsoDate }) {
   return (
     <section className="min-w-0 space-y-4">
-      <h2 className="text-sm font-semibold tracking-wide text-slate-500 uppercase">
+      <h2 className="text-fg-muted text-sm font-semibold tracking-wide uppercase">
         {`${REGION_LABEL[region.currency]} · ${CURRENCY_SYMBOL[region.currency]}`}
       </h2>
       <KpiStrip kpis={region.kpis} />

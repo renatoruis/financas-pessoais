@@ -31,9 +31,9 @@ export function CardNote({
   children: ReactNode;
 }) {
   return (
-    <div className="flex items-center justify-between gap-3 rounded-xl bg-slate-50 px-3 py-2 text-sm">
-      <span className="flex items-center gap-2 text-slate-600">
-        <Icon name={icon} className="text-slate-400" />
+    <div className="bg-surface-muted flex items-center justify-between gap-3 rounded-xl px-3 py-2 text-sm">
+      <span className="text-fg-muted flex items-center gap-2">
+        <Icon name={icon} className="text-fg-subtle" />
         {label}
       </span>
       <span className="font-semibold">{children}</span>

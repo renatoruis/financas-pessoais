@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 import { Icon } from '@/ui/icon';
 import { EntityModuleTabs } from '../_components/entity-module-tabs';
 import { loadEntityRoute, type EntityParams } from '../_lib/entity-route';
@@ -15,12 +15,12 @@ export default async function EntityLayout({ children, params }: LayoutProps) {
     <div className="space-y-6">
       <div className="space-y-3">
         <p
-          className="flex items-center gap-2 text-sm font-semibold"
-          style={{ color: entity.color }}
+          className="text-accent flex items-center gap-2 text-sm font-semibold"
+          style={{ '--accent': entity.color } as CSSProperties}
         >
           <Icon name={GROUP_ICON[entity.group]} />
           {entity.name}
-          <span className="font-normal text-slate-400">{entity.currency}</span>
+          <span className="text-fg-subtle font-normal">{entity.currency}</span>
         </p>
         <EntityModuleTabs entityId={entity.id} />
       </div>

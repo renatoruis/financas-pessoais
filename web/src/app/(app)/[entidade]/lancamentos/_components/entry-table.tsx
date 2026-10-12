@@ -22,14 +22,12 @@ interface EntryTableProps {
 function DescriptionCell({ entry }: { readonly entry: Entry }) {
   return (
     <div className="min-w-48">
-      <p
-        className={cn('font-medium text-slate-900', entry.status === 'cancelled' && 'line-through')}
-      >
+      <p className={cn('text-fg font-medium', entry.status === 'cancelled' && 'line-through')}>
         {entry.description}
-        {entry.linkGroup && <Icon name="link" className="ml-2 text-xs text-sky-500" />}
-        {entry.recurringId && <Icon name="repeat" className="ml-2 text-xs text-slate-400" />}
+        {entry.linkGroup && <Icon name="link" className="text-info ml-2 text-xs" />}
+        {entry.recurringId && <Icon name="repeat" className="text-fg-subtle ml-2 text-xs" />}
       </p>
-      {entry.notes && <p className="max-w-xs truncate text-xs text-slate-500">{entry.notes}</p>}
+      {entry.notes && <p className="text-fg-muted max-w-xs truncate text-xs">{entry.notes}</p>}
     </div>
   );
 }
@@ -54,14 +52,14 @@ export function EntryTable({ entries, reference, today }: EntryTableProps) {
         {entries.map((e) => {
           const overdue = isOverdue(e, today);
           return (
-            <tr key={e.id} className="hover:bg-slate-50/60">
-              <Td className={cn('whitespace-nowrap', overdue && 'font-semibold text-rose-600')}>
+            <tr key={e.id} className="hover:bg-surface-muted/60">
+              <Td className={cn('whitespace-nowrap', overdue && 'text-negative font-semibold')}>
                 {formatDate(e.dueDate)}
               </Td>
               <Td>
                 <DescriptionCell entry={e} />
               </Td>
-              <Td className="whitespace-nowrap text-slate-600">
+              <Td className="text-fg-muted whitespace-nowrap">
                 {centers.get(e.costCenterId)} · {categories.get(e.categoryId)}
               </Td>
               <Td className="text-right font-medium">
@@ -72,7 +70,7 @@ export function EntryTable({ entries, reference, today }: EntryTableProps) {
                   {overdue ? 'Em atraso' : STATUS_LABEL[e.status]}
                 </Badge>
                 {e.settledOn && (
-                  <p className="mt-0.5 text-xs text-slate-400">{formatDate(e.settledOn)}</p>
+                  <p className="text-fg-subtle mt-0.5 text-xs">{formatDate(e.settledOn)}</p>
                 )}
               </Td>
               <Td>

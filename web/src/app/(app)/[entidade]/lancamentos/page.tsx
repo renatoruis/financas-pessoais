@@ -45,14 +45,14 @@ export default async function EntriesPage({ params, searchParams }: PageProps) {
       />
       <EntryFilters reference={reference} values={filters} period={period} basePath={basePath} />
       {totals && (
-        <div className="flex flex-wrap items-center gap-x-5 gap-y-1 rounded-2xl bg-white px-4 py-3 text-sm shadow-sm ring-1 ring-slate-100">
-          <span className="text-slate-500">
-            Entradas <MoneyText value={totals.income} className="font-medium text-slate-900" />
+        <div className="bg-surface ring-line-soft flex flex-wrap items-center gap-x-5 gap-y-1 rounded-2xl px-4 py-3 text-sm shadow-sm ring-1">
+          <span className="text-fg-muted">
+            Entradas <MoneyText value={totals.income} className="text-fg font-medium" />
           </span>
-          <span className="text-slate-500">
-            Saídas <MoneyText value={totals.expense} className="font-medium text-slate-900" />
+          <span className="text-fg-muted">
+            Saídas <MoneyText value={totals.expense} className="text-fg font-medium" />
           </span>
-          <span className="text-slate-500">
+          <span className="text-fg-muted">
             Líquido <MoneyText value={totals.net} signed className="font-semibold" />
           </span>
         </div>

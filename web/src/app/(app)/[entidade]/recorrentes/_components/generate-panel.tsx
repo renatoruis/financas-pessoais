@@ -32,12 +32,12 @@ export function GeneratePanel({ entity, period, plan }: GeneratePanelProps) {
           {plan.map(({ template, dueDate }) => (
             <li
               key={template.id}
-              className="flex items-center gap-3 rounded-xl bg-slate-50 px-3 py-2 text-sm"
+              className="bg-surface-muted flex items-center gap-3 rounded-xl px-3 py-2 text-sm"
             >
               <span className="h-6 w-1 rounded-full" style={{ backgroundColor: entity.color }} />
               <div className="min-w-0 flex-1">
-                <p className="truncate font-medium text-slate-800">{template.description}</p>
-                <p className="text-xs text-slate-500">{formatShortDate(dueDate)}</p>
+                <p className="text-fg truncate font-medium">{template.description}</p>
+                <p className="text-fg-muted text-xs">{formatShortDate(dueDate)}</p>
               </div>
               <MoneyText
                 value={
@@ -45,7 +45,7 @@ export function GeneratePanel({ entity, period, plan }: GeneratePanelProps) {
                     ? null
                     : money(template.expectedCents, entity.currency)
                 }
-                className="text-slate-700"
+                className="text-fg-muted"
               />
             </li>
           ))}

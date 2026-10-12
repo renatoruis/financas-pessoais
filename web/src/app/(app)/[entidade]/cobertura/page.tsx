@@ -77,7 +77,7 @@ export default async function PropertiesPage({ params, searchParams }: PageProps
         <ComboChart
           data={chartData}
           currency={overview.cash.end.currency}
-          bars={[{ key: 'result', label: 'Resultado do mês', color: '#a5b4fc' }]}
+          bars={[{ key: 'result', label: 'Resultado do mês', color: 'var(--color-chart-extra)' }]}
           lines={[{ key: 'end', label: 'Caixa no fim', color: entity.color }]}
         />
       </Card>

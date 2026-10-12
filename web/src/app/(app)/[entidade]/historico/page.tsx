@@ -77,8 +77,8 @@ export default async function HistoryPage({ params, searchParams }: PageProps) {
             cumulative: m.cumulative.cents,
           }))}
           bars={[
-            { key: 'income', label: 'Receitas', color: '#6ee7b7' },
-            { key: 'expense', label: 'Despesas', color: '#fda4af' },
+            { key: 'income', label: 'Receitas', color: 'var(--color-chart-income)' },
+            { key: 'expense', label: 'Despesas', color: 'var(--color-chart-expense)' },
           ]}
           lines={[{ key: 'cumulative', label: 'Acumulado', color: entity.color }]}
         />

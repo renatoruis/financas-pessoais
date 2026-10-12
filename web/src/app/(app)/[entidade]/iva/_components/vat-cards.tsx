@@ -71,7 +71,7 @@ export function QuartersCard({ vat }: { readonly vat: VatOverview }) {
       {vat.quarters.length === 0 ? (
         <EmptyState icon="calendar" title="Sem IVA registado" />
       ) : (
-        <Table>
+        <Table stickyFirst>
           <thead>
             <tr>
               <Th>Trimestre</Th>
@@ -83,7 +83,7 @@ export function QuartersCard({ vat }: { readonly vat: VatOverview }) {
           <tbody>
             {vat.quarters.map((q) => (
               <tr key={q.quarter}>
-                <Td className="font-medium text-slate-900">{q.quarter}</Td>
+                <Td className="text-fg font-medium">{q.quarter}</Td>
                 <Td className="text-right">
                   <MoneyText value={q.invoiced} />
                 </Td>
@@ -118,12 +118,12 @@ export function OpenInvoicesCard({ vat, reference, today }: OpenInvoicesProps) {
       {vat.openInvoices.length === 0 ? (
         <EmptyState icon="circle-check" title="Nada por receber" />
       ) : (
-        <ul className="divide-y divide-slate-100">
+        <ul className="divide-line-soft divide-y">
           {vat.openInvoices.map((e) => (
             <li key={e.id} className="flex items-center gap-3 py-3">
               <div className="min-w-0 flex-1">
-                <p className="truncate font-medium text-slate-900">{e.description}</p>
-                <p className="text-xs text-slate-500">
+                <p className="text-fg truncate font-medium">{e.description}</p>
+                <p className="text-fg-muted text-xs">
                   Vence {formatDate(e.dueDate)} · {e.notes}
                 </p>
               </div>

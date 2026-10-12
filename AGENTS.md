@@ -144,6 +144,12 @@ Glossário (UI → código):
   Se faltar um, criá-lo em `src/ui` antes de duplicar markup.
 - Tailwind apenas; sem CSS solto exceto tokens em `globals.css`. Ícones: Font Awesome Free (`fa-solid`).
 - Cantos `rounded-2xl` em cartões, `rounded-xl` em controlos. Cores por grupo (tokens em `globals.css`).
+- Modo claro/escuro: usar só os tokens de `globals.css` (`bg-canvas`, `bg-surface`, `bg-surface-muted`,
+ `bg-surface-strong`, `text-fg`, `text-fg-muted`, `text-fg-subtle`, `border-line`, `bg-primary`,
+ `positive`/`negative`/`warning`/`info` e `-soft`), nunca `slate-*`, `white` ou hex. Texto na cor da
+ entidade com `text-accent` (`--accent`). Tema em cookie (`src/ui/theme.ts`).
+- Telemóvel: navegação na barra de baixo (`mobile-nav.tsx`); modais sobem de baixo; tabelas largas têm
+ alternativa em lista abaixo de `xl` (ou `stickyFirst`). Cada rota lenta tem `loading.tsx` com `src/ui/skeleton`.
 - Server components por omissão; `'use client'` só onde há estado ou eventos.
 
 ## Como acrescentar uma funcionalidade

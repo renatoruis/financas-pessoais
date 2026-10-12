@@ -17,7 +17,7 @@ const TEXT = {
 } as const;
 
 const ARROW =
-  'grid size-9 place-items-center rounded-xl text-slate-600 hover:bg-slate-100 hover:text-slate-900';
+  'grid size-10 shrink-0 place-items-center rounded-xl sm:size-9 text-fg-muted hover:bg-surface-strong hover:text-fg';
 
 /** Navegação anterior / seguinte por links (mês por omissão, ou ano). */
 export function MonthPicker({
@@ -29,13 +29,13 @@ export function MonthPicker({
 }: MonthPickerProps) {
   const text = TEXT[unit];
   return (
-    <div className="flex items-center gap-1 rounded-2xl bg-white p-1 shadow-sm ring-1 ring-slate-900/5">
+    <div className="bg-surface ring-fg/5 flex items-center gap-1 rounded-2xl p-1 shadow-sm ring-1">
       <Link href={prevHref} className={ARROW} aria-label={text.prev}>
         <Icon name="chevron-left" />
       </Link>
       <span
         className={cn(
-          'px-2 text-center text-sm font-medium text-slate-800',
+          'text-fg flex-1 px-2 text-center text-sm font-medium',
           unit === 'month' ? 'min-w-36' : 'min-w-16',
         )}
       >

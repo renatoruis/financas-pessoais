@@ -27,7 +27,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   return (
     <ToastContext.Provider value={notify}>
       {children}
-      <div className="fixed right-4 bottom-4 z-[60] flex w-80 flex-col gap-2">
+      <div className="fixed inset-x-4 bottom-24 z-[60] flex flex-col gap-2 md:inset-x-auto md:right-4 md:bottom-4 md:w-80">
         {items.map((t) => (
           <div
             key={t.id}
@@ -35,13 +35,13 @@ export function ToastProvider({ children }: { children: ReactNode }) {
             className={cn(
               'flex items-start gap-3 rounded-2xl px-4 py-3 text-sm shadow-lg ring-1',
               t.kind === 'success'
-                ? 'bg-white text-slate-800 ring-emerald-200'
-                : 'bg-rose-50 text-rose-800 ring-rose-200',
+                ? 'bg-surface text-fg ring-positive/30'
+                : 'bg-negative-soft text-negative ring-negative/30',
             )}
           >
             <Icon
               name={t.kind === 'success' ? 'circle-check' : 'circle-exclamation'}
-              className={cn('mt-0.5', t.kind === 'success' ? 'text-emerald-600' : 'text-rose-600')}
+              className={cn('mt-0.5', t.kind === 'success' ? 'text-positive' : 'text-negative')}
             />
             <span>{t.message}</span>
           </div>

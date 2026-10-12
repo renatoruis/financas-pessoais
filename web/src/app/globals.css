@@ -1,29 +1,78 @@
 @import 'tailwindcss';
 
+:root {
+  color-scheme: light dark;
+}
+
+:root.light {
+  color-scheme: light;
+}
+
+:root.dark {
+  color-scheme: dark;
+}
+
+/* Cada token tem o valor claro e o escuro; o tema vem de `color-scheme` (sistema ou classe). */
 @theme {
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 
-  --color-canvas: #f4f5f7;
-  --color-ink: #1f2430;
+  --color-canvas: light-dark(#f4f5f7, #0d1117);
+  --color-surface: light-dark(#ffffff, #161b22);
+  --color-surface-muted: light-dark(#f8fafc, #1b222b);
+  --color-surface-strong: light-dark(#f1f5f9, #252d38);
+  --color-line: light-dark(#e2e8f0, #2f3843);
+  --color-line-soft: light-dark(#f1f5f9, #222a34);
+  --color-fg: light-dark(#0f172a, #e6edf3);
+  --color-fg-muted: light-dark(#64748b, #9aa7b4);
+  --color-fg-subtle: light-dark(#94a3b8, #6b7785);
+  --color-primary: light-dark(#0f172a, #e6edf3);
+  --color-on-primary: light-dark(#ffffff, #0d1117);
+
+  --color-positive: light-dark(#047857, #34d399);
+  --color-positive-soft: light-dark(#ecfdf5, #10291f);
+  --color-negative: light-dark(#be123c, #fb7185);
+  --color-negative-soft: light-dark(#fff1f2, #361720);
+  --color-warning: light-dark(#b45309, #fbbf24);
+  --color-warning-soft: light-dark(#fffbeb, #31260f);
+  --color-info: light-dark(#0369a1, #38bdf8);
+  --color-info-soft: light-dark(#f0f9ff, #0e2736);
+
+  /* Séries dos gráficos. */
+  --color-chart-income: light-dark(#6ee7b7, #059669);
+  --color-chart-expense: light-dark(#fda4af, #e11d48);
+  --color-chart-extra: light-dark(#a5b4fc, #6366f1);
 
   /* Cores dos grupos (as mesmas da planilha). */
   --color-companies-br: #1e3a5f;
   --color-companies-pt: #145a63;
-  --color-companies-soft: #e4ebf3;
   --color-personal-br: #8c4a2f;
   --color-personal-pt: #a56b1c;
-  --color-personal-soft: #f6efe4;
   --color-properties: #5c4a73;
-  --color-properties-soft: #f3eef6;
 }
 
 @layer base {
   body {
-    @apply bg-canvas text-ink antialiased;
+    @apply bg-canvas text-fg antialiased;
   }
 
   ::selection {
-    @apply bg-slate-900 text-white;
+    @apply bg-primary text-on-primary;
+  }
+}
+
+/* Texto na cor da entidade (`--accent`), mais claro no escuro para continuar legível. */
+@utility text-accent {
+  color: light-dark(
+    var(--accent, var(--color-fg-muted)),
+    color-mix(in oklab, var(--accent, var(--color-fg-muted)) 55%, white)
+  );
+}
+
+/* Listas que rolam na horizontal (tabs) sem barra visível. */
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
   }
 }
 

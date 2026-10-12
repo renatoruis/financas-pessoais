@@ -42,10 +42,10 @@ export function ConfirmDialog({
       }
     >
       <div className="flex items-start gap-3">
-        <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-rose-50 text-rose-600">
+        <span className="bg-negative-soft text-negative grid size-9 shrink-0 place-items-center rounded-xl">
           <Icon name="triangle-exclamation" />
         </span>
-        <div className="text-sm text-slate-600">{children}</div>
+        <div className="text-fg-muted text-sm">{children}</div>
       </div>
     </Modal>
   );

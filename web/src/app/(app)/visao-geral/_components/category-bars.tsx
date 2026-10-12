@@ -17,17 +17,17 @@ export function CategoryBars({ categories }: { categories: readonly NamedCategor
           {categories.map((c) => (
             <li key={c.categoryId}>
               <div className="flex items-baseline justify-between gap-3 text-sm">
-                <span className="truncate font-medium text-slate-800">{c.name}</span>
+                <span className="text-fg truncate font-medium">{c.name}</span>
                 <span className="flex shrink-0 items-baseline gap-2">
                   <MoneyText value={c.total} />
-                  <span className="w-10 text-right text-xs text-slate-500">
+                  <span className="text-fg-muted w-10 text-right text-xs">
                     {formatPercent(c.share)}
                   </span>
                 </span>
               </div>
-              <div className="mt-1 h-2 overflow-hidden rounded-full bg-slate-100">
+              <div className="bg-surface-strong mt-1 h-2 overflow-hidden rounded-full">
                 <div
-                  className="h-full rounded-full bg-rose-300"
+                  className="bg-chart-expense h-full rounded-full"
                   style={{ width: `${c.share * 100}%` }}
                 />
               </div>

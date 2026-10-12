@@ -10,7 +10,7 @@ interface SegmentedLink {
 /** Como `Segmented`, mas cada opção é um link (ex.: abas que mudam a query string). */
 export function SegmentedLinks({ links }: { readonly links: readonly SegmentedLink[] }) {
   return (
-    <nav className="inline-flex max-w-full overflow-x-auto rounded-xl bg-slate-100 p-1">
+    <nav className="no-scrollbar bg-surface-strong inline-flex max-w-full overflow-x-auto rounded-xl p-1">
       {links.map((l) => (
         <Link
           key={l.href}
@@ -18,7 +18,7 @@ export function SegmentedLinks({ links }: { readonly links: readonly SegmentedLi
           aria-current={l.active ? 'page' : undefined}
           className={cn(
             'rounded-lg px-3 py-1.5 text-sm font-medium whitespace-nowrap transition',
-            l.active ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-800',
+            l.active ? 'bg-surface text-fg shadow-sm' : 'text-fg-muted hover:text-fg',
           )}
         >
           {l.label}

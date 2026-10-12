@@ -8,15 +8,15 @@ export default async function LoginPage({
 }) {
   const { next } = await searchParams;
   return (
-    <main className="grid min-h-screen place-items-center px-4">
-      <div className="w-full max-w-sm rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-900/5">
+    <main className="grid min-h-dvh place-items-center px-4">
+      <div className="bg-surface ring-fg/5 w-full max-w-sm rounded-2xl p-6 shadow-sm ring-1">
         <div className="mb-6 flex items-center gap-3">
-          <span className="grid size-9 place-items-center rounded-xl bg-slate-900 text-white">
+          <span className="bg-primary text-on-primary grid size-9 place-items-center rounded-xl">
             <Icon name="wallet" />
           </span>
           <div>
-            <h1 className="text-sm font-semibold text-slate-900">Finanças</h1>
-            <p className="text-xs text-slate-500">Entrar para continuar</p>
+            <h1 className="text-fg text-sm font-semibold">Finanças</h1>
+            <p className="text-fg-muted text-xs">Entrar para continuar</p>
           </div>
         </div>
         <LoginForm next={next} />

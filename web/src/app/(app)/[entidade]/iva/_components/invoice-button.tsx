@@ -105,7 +105,7 @@ export function InvoiceButton(props: InvoiceButtonProps) {
               />
             </Field>
           </div>
-          <div className="rounded-xl bg-slate-50 px-4 py-2">
+          <div className="bg-surface-muted rounded-xl px-4 py-2">
             <ValueList>
               <ValueRow label={`Base (${days} × ${eur(dailyRateCents)})`}>
                 {eur(amounts.baseCents)}

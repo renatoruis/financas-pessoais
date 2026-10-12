@@ -16,6 +16,12 @@ import { formatMoney } from '@/ui/format';
 
 const CENTS = 100;
 const CHART_HEIGHT = 300;
+const TICK = { fill: 'var(--color-fg-muted)' };
+const TOOLTIP_STYLE = {
+  borderRadius: 12,
+  border: '1px solid var(--color-line)',
+  background: 'var(--color-surface)',
+};
 
 export interface ChartSeries {
   readonly key: string;
@@ -46,20 +52,28 @@ export function ComboChart({ data, currency, bars = [], lines = [], stacked }: C
         margin={{ top: 8, right: 8, bottom: 0, left: 0 }}
         stackOffset={stacked ? 'sign' : undefined}
       >
-        <CartesianGrid vertical={false} stroke="#eef2f6" />
-        <XAxis dataKey="label" tickLine={false} axisLine={false} fontSize={12} />
+        <CartesianGrid vertical={false} stroke="var(--color-line-soft)" />
+        <XAxis dataKey="label" tickLine={false} axisLine={false} fontSize={12} tick={TICK} />
         <YAxis
           tickLine={false}
           axisLine={false}
           fontSize={12}
           width={48}
+          tick={TICK}
           tickFormatter={(v: number) => compact.format(v / CENTS)}
         />
         <Tooltip
           formatter={(value) => format(Number(value))}
-          contentStyle={{ borderRadius: 12, border: '1px solid #e2e8f0' }}
+          cursor={{ fill: 'var(--color-surface-strong)', opacity: 0.6 }}
+          contentStyle={TOOLTIP_STYLE}
+          labelStyle={{ color: 'var(--color-fg)', fontWeight: 600 }}
+          itemStyle={{ color: 'var(--color-fg-muted)' }}
         />
-        <Legend iconType="circle" wrapperStyle={{ fontSize: 12 }} />
+        <Legend
+          iconType="circle"
+          wrapperStyle={{ fontSize: 12 }}
+          formatter={(value: string) => <span className="text-fg-muted">{value}</span>}
+        />
         {bars.map((s) => (
           <Bar
             key={s.key}
@@ -78,7 +92,7 @@ export function ComboChart({ data, currency, bars = [], lines = [], stacked }: C
             name={s.label}
             stroke={s.color}
             strokeWidth={2.5}
-            dot={{ r: 3 }}
+            dot={{ r: 3, fill: 'var(--color-surface)' }}
             type="monotone"
             isAnimationActive={false}
           />

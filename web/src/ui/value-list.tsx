@@ -3,7 +3,7 @@ import { cn } from './cn';
 
 /** Lista "rótulo … valor" com divisórias. */
 export function ValueList({ children, className }: { children: ReactNode; className?: string }) {
-  return <dl className={cn('divide-y divide-slate-100 text-sm', className)}>{children}</dl>;
+  return <dl className={cn('divide-line-soft divide-y text-sm', className)}>{children}</dl>;
 }
 
 interface ValueRowProps {
@@ -16,8 +16,8 @@ interface ValueRowProps {
 export function ValueRow({ label, children, strong }: ValueRowProps) {
   return (
     <div className="flex items-center justify-between gap-3 py-1.5">
-      <dt className={strong ? 'font-medium text-slate-800' : 'text-slate-500'}>{label}</dt>
-      <dd className={cn('text-slate-900', strong ? 'font-semibold' : 'font-medium')}>{children}</dd>
+      <dt className={strong ? 'text-fg font-medium' : 'text-fg-muted'}>{label}</dt>
+      <dd className={cn('text-fg', strong ? 'font-semibold' : 'font-medium')}>{children}</dd>
     </div>
   );
 }

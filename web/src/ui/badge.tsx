@@ -5,11 +5,11 @@ import { Icon } from './icon';
 export type Tone = 'neutral' | 'success' | 'warning' | 'danger' | 'info';
 
 const TONES: Record<Tone, string> = {
-  neutral: 'bg-slate-100 text-slate-600',
-  success: 'bg-emerald-50 text-emerald-700',
-  warning: 'bg-amber-50 text-amber-700',
-  danger: 'bg-rose-50 text-rose-700',
-  info: 'bg-sky-50 text-sky-700',
+  neutral: 'bg-surface-strong text-fg-muted',
+  success: 'bg-positive-soft text-positive',
+  warning: 'bg-warning-soft text-warning',
+  danger: 'bg-negative-soft text-negative',
+  info: 'bg-info-soft text-info',
 };
 
 export function Badge({

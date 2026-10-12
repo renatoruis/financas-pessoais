@@ -10,51 +10,67 @@ interface ModalProps {
   readonly title: ReactNode;
   readonly children: ReactNode;
   readonly footer?: ReactNode;
-  /** `drawer` abre à direita a toda a altura. */
+  /** `drawer` abre à direita a toda a altura (no telemóvel sobe de baixo, como os outros). */
   readonly variant?: 'center' | 'drawer';
 }
 
-function useEscape(open: boolean, onClose: () => void) {
+/** Fecha com Escape e impede o fundo de rolar enquanto está aberto. */
+function useModalBehaviour(open: boolean, onClose: () => void) {
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose();
+    const { overflow } = document.body.style;
+    document.body.style.overflow = 'hidden';
     window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
+    return () => {
+      document.body.style.overflow = overflow;
+      window.removeEventListener('keydown', onKey);
+    };
   }, [open, onClose]);
 }
 
+const PANEL = {
+  center: 'sm:m-auto sm:max-w-md sm:rounded-2xl',
+  drawer: 'sm:ml-auto sm:h-full sm:max-h-full sm:max-w-lg sm:rounded-none sm:rounded-l-2xl',
+};
+
 export function Modal({ open, onClose, title, children, footer, variant = 'center' }: ModalProps) {
-  useEscape(open, onClose);
+  useModalBehaviour(open, onClose);
   if (!open) return null;
-  const drawer = variant === 'drawer';
   return (
-    <div className="fixed inset-0 z-50 flex" role="dialog" aria-modal>
+    <div className="fixed inset-0 z-50 flex items-end sm:items-stretch" role="dialog" aria-modal>
       <button
         aria-label="Fechar"
-        className="absolute inset-0 bg-slate-900/30 backdrop-blur-[2px]"
+        className="absolute inset-0 bg-black/40 backdrop-blur-[2px]"
         onClick={onClose}
       />
       <div
         className={cn(
-          'relative flex max-h-full flex-col bg-white shadow-2xl',
-          drawer
-            ? 'ml-auto h-full w-full max-w-lg rounded-l-2xl'
-            : 'm-auto w-full max-w-md rounded-2xl',
+          'bg-surface relative flex max-h-[92dvh] w-full flex-col rounded-t-2xl shadow-2xl',
+          PANEL[variant],
         )}
       >
-        <header className="flex items-center justify-between border-b border-slate-100 px-6 py-4">
-          <h2 className="font-semibold text-slate-900">{title}</h2>
+        <span className="bg-line mx-auto mt-2 h-1 w-10 shrink-0 rounded-full sm:hidden" />
+        <header className="border-line-soft flex items-center justify-between border-b px-5 py-3 sm:px-6 sm:py-4">
+          <h2 className="text-fg font-semibold">{title}</h2>
           <button
             onClick={onClose}
-            className="grid size-8 place-items-center rounded-lg text-slate-500 hover:bg-slate-100"
+            className="text-fg-muted hover:bg-surface-strong grid size-10 place-items-center rounded-lg sm:size-8"
             aria-label="Fechar"
           >
             <Icon name="xmark" />
           </button>
         </header>
-        <div className="flex-1 overflow-y-auto px-6 py-5">{children}</div>
+        <div
+          className={cn(
+            'flex-1 overflow-y-auto overscroll-contain px-5 py-5 sm:px-6',
+            !footer && 'pb-[max(1.25rem,env(safe-area-inset-bottom))]',
+          )}
+        >
+          {children}
+        </div>
         {footer && (
-          <footer className="flex justify-end gap-2 border-t border-slate-100 px-6 py-4">
+          <footer className="border-line-soft flex justify-end gap-2 border-t px-5 pt-4 pb-[max(1rem,env(safe-area-inset-bottom))] sm:px-6">
             {footer}
           </footer>
         )}
