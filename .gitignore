@@ -1,0 +1,13 @@
+node_modules/
+.env
+.env.*
+!.env.example
+.DS_Store
+
+web/.next/
+web/out/
+web/coverage/
+web/next-env.d.ts
+web/*.tsbuildinfo
+backups/
+*.xlsx

@@ -1,0 +1,17 @@
+---
+description: Design system e padrões de UI da app web
+globs: web/src/app/**,web/src/ui/**
+alwaysApply: false
+---
+
+# UI
+
+- Reutilizar `src/ui` (Card, Button, Badge, Modal, Drawer, MoneyText, MonthPicker, Field, Toast…).
+  Componente em falta → criar em `src/ui`, não duplicar markup nas páginas.
+- Tailwind apenas; tokens de cor por grupo em `src/app/globals.css`
+  (empresas BR/PT, pessoal BR/PT, imóveis). Ícones Font Awesome Free (`fa-solid fa-…`).
+- Cartões `rounded-2xl`, controlos `rounded-xl`, sombras suaves, muito espaço em branco.
+- Server components por omissão; `'use client'` só com estado/eventos (formulários, modais).
+- Valores monetários sempre via `MoneyText`; BRL e EUR nunca no mesmo total.
+- Texto da UI em português, com os termos da planilha (Lançamento, Liquidar, Previsto…).
+- Estados vazios com mensagem útil; erros de validação junto ao campo; toast após gravar.

@@ -1,0 +1,18 @@
+---
+description: Convenções de código, dinheiro, datas e testes da app web
+globs: web/**
+alwaysApply: true
+---
+
+# Código
+
+- Código em inglês, UI em português (glossário em `AGENTS.md`). Ficheiros `kebab-case`.
+- Máx. 200 linhas/ficheiro, 40/função (`.ts`), 120/componente (`.tsx`), 4 parâmetros.
+- Sem `any`, sem default exports (exceto ficheiros especiais do Next), sem `eslint-disable`,
+  sem `@ts-ignore`. Sem números mágicos em `domain`/`application`.
+- Dinheiro: sempre `Money` (`{ cents, currency }`); nunca somar moedas diferentes.
+- Datas: `IsoDate` (`YYYY-MM-DD`) e `YearMonth` (`YYYY-MM`) de `@/domain/shared/iso-date`.
+- Cada regra de domínio e cada caso de uso tem `*.test.ts` ao lado. Casos de uso testados com
+  repositórios em memória (`src/application/testing/`).
+- Pronto = `pnpm check` verde, sem avisos.
+- Mudança de stack/camadas/modelo → ADR em `docs/adr/`.

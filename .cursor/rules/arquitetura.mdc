@@ -1,0 +1,22 @@
+---
+description: Camadas da Clean Architecture da app web (web/src)
+globs: web/src/**
+alwaysApply: true
+---
+
+# Arquitetura
+
+Ler `AGENTS.md` na raiz antes de alterar código. Resumo obrigatório:
+
+- `domain` → só `domain`. Puro: sem I/O, sem libs, sem `new Date()`.
+- `application` → `application`, `domain`. Um caso de uso por ficheiro, classe com `execute()`,
+  dependências (ports) no construtor.
+- `infrastructure` → `infrastructure`, `application`, `domain`. Drizzle e repositórios aqui.
+- `composition` (`src/composition/container.ts`) é o único ponto que liga ports a implementações.
+- `ui` → `ui`, `domain` (só `import type`).
+- `app` → `app`, `ui`, `application`, `domain`, `composition`.
+
+Nenhuma regra de negócio em páginas, componentes, server actions, route handlers ou repositórios.
+Server action / route handler = Zod → caso de uso → resposta.
+
+O lint (`eslint-plugin-boundaries`) falha se uma dependência proibida for criada.
