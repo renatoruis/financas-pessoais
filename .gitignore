@@ -9,5 +9,4 @@ web/out/
 web/coverage/
 web/next-env.d.ts
 web/*.tsbuildinfo
-backups/
-*.xlsx
+.vercel
