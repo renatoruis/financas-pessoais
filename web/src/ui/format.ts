@@ -51,6 +51,11 @@ export const formatPeriod = (period: YearMonth): string =>
 export const formatShortPeriod = (period: YearMonth): string =>
   shortPeriodFormat.format(asUtc(`${period}-01`)).replace('.', '');
 
+const percentFormat = new Intl.NumberFormat('pt-PT', { style: 'percent' });
+
+/** 0.25 → "25 %". */
+export const formatPercent = (fraction: number): string => percentFormat.format(fraction);
+
 /** [2, 5, 8, 11] → "fev, mai, ago, nov". */
 export const formatMonthList = (months: readonly number[]): string =>
   months.map((m) => formatShortPeriod(`2000-${String(m).padStart(2, '0')}`)).join(', ');

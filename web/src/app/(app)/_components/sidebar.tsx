@@ -88,6 +88,10 @@ export function Sidebar({ entities }: { readonly entities: readonly Entity[] }) 
           <Icon name="gauge-high" className="w-4 text-center" />
           Painel
         </NavLink>
+        <NavLink href="/visao-geral" active={pathname === '/visao-geral'} color="#0f172a">
+          <Icon name="chart-pie" className="w-4 text-center" />
+          Visão geral
+        </NavLink>
         <p className="mt-4 mb-1 hidden px-3 text-xs font-medium tracking-wide text-slate-400 uppercase md:block">
           Entidades
         </p>

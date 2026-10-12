@@ -39,7 +39,8 @@ Páginas autenticadas vivem em `src/app/(app)/`; a sessão em `src/app/_auth/`.
 Cada entidade (Empresa BR, Empresa PT, Pessoal BR, Pessoal PT, Imóveis BR) é um módulo isolado:
 
 - Rotas em `src/app/(app)/[entidade]/` (Resumo, Lançamentos, Recorrentes, Histórico, Cadastros e módulos
-  próprios declarados em `src/app/(app)/_lib/entity-modules.ts`). O Painel (`/`) é a única visão conjunta.
+  próprios declarados em `src/app/(app)/_lib/entity-modules.ts`). O Painel (`/`) e a Visão geral
+ (`/visao-geral`, Brasil e Portugal lado a lado, sem converter moedas) são as únicas visões conjuntas.
 - Categorias e centros pertencem a uma entidade (chave `(entity_id, id)`); validar com
   `requireCategory`/`requireCostCenter` de `application/shared/reference-lookup.ts`.
 - Nada liga lançamentos de entidades diferentes; `linkGroup` só dentro da mesma entidade (fatura + IVA).

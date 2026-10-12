@@ -18,6 +18,7 @@ import { CreateCostCenter } from '@/application/reference/create-cost-center';
 import { GetReferenceData } from '@/application/reference/get-reference-data';
 import { GetDashboard } from '@/application/reports/get-dashboard';
 import { GetHistory } from '@/application/reports/get-history';
+import { GetOverview } from '@/application/reports/get-overview';
 import { GetSettings } from '@/application/settings/get-settings';
 import { UpdateSettings } from '@/application/settings/update-settings';
 import { GetVatOverview } from '@/application/vat/get-vat-overview';
@@ -66,6 +67,7 @@ function buildContainer() {
     getVatOverview: new GetVatOverview(deps),
     getDashboard: new GetDashboard(deps),
     getHistory: new GetHistory(deps),
+    getOverview: new GetOverview(deps),
     getReferenceData: new GetReferenceData(deps),
     createCategory: new CreateCategory(deps),
     createCostCenter: new CreateCostCenter(deps),
